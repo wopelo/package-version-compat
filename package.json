@@ -1,0 +1,37 @@
+{
+  "name": "package-version-compat",
+  "version": "0.0.1",
+  "description": "A command-line tool that finds the compatible version range of npm dependencies based on the specified version of Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [
+    "node",
+    "npm",
+    "dependencies",
+    "compatibility",
+    "version",
+    "package",
+    "nodejs",
+    "semver",
+    "resolver",
+    "compat",
+    "dependency-management",
+    "versioning",
+    "range",
+    "compatibility-check",
+    "version-compat"
+  ],
+  "bin": {
+    "pvc": "./index.js"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "dependencies": {
+    "semver": "^7.6.3"
+  }
+}
