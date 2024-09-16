@@ -24,6 +24,10 @@ function fetch(url, method) {
         const req = httpModule.request(url, options, (res) => {
             let data = '';
 
+            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                return fetch(res.headers.location, method).then(resolve).catch(reject);
+            }
+
             res.on('data', (chunk) => {
                 data += chunk;
             });
