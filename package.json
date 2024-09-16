@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "wopelo <wopelo@163.com>",
   "license": "ISC",
+  "repository": "https://github.com/wopelo/package-version-compat",
   "keywords": [
     "node",
     "npm",
