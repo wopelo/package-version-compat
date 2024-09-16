@@ -82,7 +82,7 @@ exports.getPackageInfo = async (packageName, currentRegistry) => {
     } catch (error) {
         console.error(`Error fetching ${packageName} info:`, error);
 
-        return null;
+        throw error;
     }
 }
 

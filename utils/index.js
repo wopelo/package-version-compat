@@ -89,6 +89,36 @@ exports.getCurrentRegistry = () => {
 }
 
 /**
+ * Finds the version ranges of dependency that are compatible with the given Node.js version.
+ * @param {string} dep - The dependency to find the version range for.
+ * @param {string} nodeVersion - The current Node.js version.
+ * @param {string} currentRegistry - The current npm registry URL.
+ * @param {Object} argsObj - The arguments object.
+ * @returns {Promise<Object>} A promise that resolves to an object mapping dependencies to their version ranges.
+ */
+async function findDepVersion(dep, nodeVersion, currentRegistry, argsObj) {
+    try {
+        const depInfo = await getPackageInfo(dep, currentRegistry);
+
+        if (!depInfo) return;
+
+        const versionNodeEngineMap = getVersionNodeEngineMap(depInfo, argsObj);
+
+        // console.log('versionNodeEngineMap', versionNodeEngineMap);
+        // console.log('versions', Object.keys(versionNodeEngineMap));
+
+        const result = findPackageVersionRange(versionNodeEngineMap, nodeVersion);
+
+        const transformedArray = result.map((subArray) => `>=${subArray[0]} <=${subArray[1]}`);
+        console.log(`${dep} range is: `, transformedArray.join(' || '));
+
+        return result;
+    } catch (error) {
+        console.error(`Error getting package info for ${dep}:`, error);
+    }
+}
+
+/**
  * Finds the version ranges of dependencies that are compatible with the given Node.js version.
  * @param {string} nodeVersion - The current Node.js version.
  * @param {string} currentRegistry - The current npm registry URL.
@@ -100,31 +130,7 @@ exports.findDepsVersion = async (nodeVersion, currentRegistry, argsObj) => {
     const promiseArr = [];
 
     allDeps.forEach((dep) => {
-        promiseArr.push(
-            getPackageInfo(dep, currentRegistry)
-                .then((depInfo) => {
-                    if (depInfo) {
-                        const versionNodeEngineMap = getVersionNodeEngineMap(depInfo, argsObj);
-
-                        // console.log('versionNodeEngineMap', versionNodeEngineMap);
-                        // console.log('versions', Object.keys(versionNodeEngineMap));
-
-                        return versionNodeEngineMap;
-                    }
-                })
-                .then((versionNodeEngineMap) => {
-                    if (!versionNodeEngineMap) {
-                        return;
-                    }
-
-                    const result = findPackageVersionRange(versionNodeEngineMap, nodeVersion);
-
-                    const transformedArray = result.map((subArray) => `>=${subArray[0]} <=${subArray[1]}`);
-                    console.log(`${dep} range is: `, transformedArray.join(' || '));
-
-                    return result;
-                })
-        );
+        promiseArr.push(findDepVersion(dep, nodeVersion, currentRegistry, argsObj));
     });
 
     const depsRanges = await Promise.all(promiseArr);
