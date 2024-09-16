@@ -1,7 +1,7 @@
 # package-version-compat
 package-version-compat is a command-line tool that finds the compatible version range of npm dependencies based on the specified version of Node.js.
 
-[简体中文](https://github.com/wopelo/package-version-compat/README.zh-CN.md)
+[简体中文](https://github.com/wopelo/package-version-compat/blob/main/README.zh-CN.md)
 
 ## Install
 ```bash

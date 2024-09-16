@@ -1,7 +1,7 @@
 # package-version-compat
 package-version-compat 是一个命令行工具，用于根据指定的 Node.js 版本查找 npm 依赖项的兼容版本范围。
 
-[English](https://github.com/wopelo/package-version-compat/README.md)
+[English](https://github.com/wopelo/package-version-compat/blob/main/README.md)
 
 ## 安装
 ```bash
